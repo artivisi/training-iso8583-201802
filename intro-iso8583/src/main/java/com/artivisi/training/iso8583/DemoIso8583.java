@@ -2,6 +2,8 @@ package com.artivisi.training.iso8583;
 
 import java.math.BigInteger;
 
+import org.apache.commons.lang.StringUtils;
+
 public class DemoIso8583 {
     public static void main(String[] xx){
 
@@ -30,13 +32,22 @@ public class DemoIso8583 {
         */
 
         
-        ISOMessage msg = new ISOMessage();
-        msg.aktifkanSlot(7);
-        msg.aktifkanSlot(41);
-        msg.aktifkanSlot(70);
+        ISOMessage msg = new ISOMessage("0800");
 
-        String bitmap = msg.hitungBitmap();
-        System.out.println("Bitmap : "+bitmap);
+        /* tidak usah dipanggil manual
+        msg.aktifkanSlot(2);
+        msg.aktifkanSlot(4);
+        msg.aktifkanSlot(7);
+        msg.aktifkanSlot(39);
+        msg.aktifkanSlot(102);
+        */
+
+        msg.isiData(7, "1017110000");
+        msg.isiData(41, StringUtils.rightPad("ATM001", 8, " "));
+        msg.isiData(70, "301");
+
+        String isomsg = msg.buatMessage();
+        System.out.println("ISO Message : "+isomsg);
         
     }
 }

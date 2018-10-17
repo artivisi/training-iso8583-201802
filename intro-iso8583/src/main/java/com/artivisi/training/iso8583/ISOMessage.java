@@ -1,6 +1,5 @@
 package com.artivisi.training.iso8583;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +10,11 @@ public class ISOMessage {
     private BigInteger primaryBitmap = BigInteger.ZERO;
     private BigInteger secondaryBitmap = BigInteger.ZERO;
     private Map<Integer, String> data = new HashMap<>();
+    private String mti;
+
+    public ISOMessage(String mti){
+        this.mti = mti;
+    }
 
     public void aktifkanSlot(Integer nomor){
         if(nomor > 64) {
@@ -24,9 +28,28 @@ public class ISOMessage {
         }
     }
 
-    public String hitungBitmap(){
+    private String hitungBitmap(){
         String primary = StringUtils.leftPad(primaryBitmap.toString(16), 16, "0");
         String secondary = StringUtils.leftPad(secondaryBitmap.toString(16), 16, "0");
         return primary + secondary;
+    }
+
+    public void isiData(Integer slot, String isi){
+        data.put(slot, isi);
+    }
+
+    public String buatMessage(){
+        StringBuilder hasil = new StringBuilder();
+
+        for(int i = 0; i < 128; i++){
+            String isi = data.get(i);
+            if(isi != null) {
+                aktifkanSlot(i);
+                hasil.append(isi);
+            }
+        }
+
+        String bitmap = hitungBitmap();
+        return mti + bitmap + hasil;
     }
 }

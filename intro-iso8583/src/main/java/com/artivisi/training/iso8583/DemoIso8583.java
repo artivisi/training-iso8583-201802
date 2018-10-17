@@ -1,6 +1,7 @@
 package com.artivisi.training.iso8583;
 
-import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -49,5 +50,16 @@ public class DemoIso8583 {
         String isomsg = msg.buatMessage();
         System.out.println("ISO Message : "+isomsg);
         
+        Map<Integer, Integer> spec = new HashMap<>();
+        spec.put(7, 10);
+        spec.put(41, 8);
+        spec.put(70, 3);
+
+        ISOMessage hasilParsing = ISOMessage.of("0800820000000080000004000000000000001017151200ATM 123 301", spec);
+
+        System.out.println("Bit 7 : ["+ hasilParsing.ambilData(7) +"]");
+        System.out.println("Bit 41 : ["+ hasilParsing.ambilData(41) +"]");
+        System.out.println("Bit 70 : ["+ hasilParsing.ambilData(70) +"]");
+
     }
 }

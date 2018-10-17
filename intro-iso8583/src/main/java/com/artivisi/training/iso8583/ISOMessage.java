@@ -10,7 +10,6 @@ public class ISOMessage {
     private BigInteger primaryBitmap = BigInteger.ZERO;
     private BigInteger secondaryBitmap = BigInteger.ZERO;
     private Map<Integer, String> data = new HashMap<>();
-    private Map<Integer, Integer> spec = new HashMap<>();
     private String mti;
 
     public ISOMessage(String mti){

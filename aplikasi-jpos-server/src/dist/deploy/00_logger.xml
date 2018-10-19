@@ -3,31 +3,26 @@
 <logger name="Q2" class="org.jpos.q2.qbean.LoggerAdaptor">
   <property name="redirect" value="stdout, stderr" />
   <log-listener class="org.jpos.util.SimpleLogListener" />
-  <log-listener class="org.jpos.util.BufferedLogListener">
-    <property name="max-size" value="100" />
-    <property name="name" value="logger.Q2.buffered" />
-  </log-listener>
-
   <!--
-  <log-listener class="org.jpos.util.SysLogListener">
-     <property name="facility" value="21" />
-     <property name="severity" value="5" />
-     <property name="tags" value="audit, syslog" />
-     <property name="prefix" value="[jPOS]" />
+  <log-listener class="org.jpos.util.ProtectedLogListener">
+    <property name="protect" value="2 35 70" />
+    <property name="wipe" value="52 45" />
   </log-listener>
   -->
 
   <log-listener class="org.jpos.util.DailyLogListener">
-    <property name="window" value="86400" /> <!-- optional, default one day -->
+    <property name="window" value="86400" />
+    <!-- optional, default one day -->
     <!--needed-->
     <property name="prefix" value="log/q2" />
-    <property name="suffix" value=".log"/> <!-- optional -->
+    <property name="suffix" value=".log"/>
+    <!-- optional -->
 
     <!--optional the default is "-yyyy-MM-dd" -->
     <property name="date-format" value="-yyyy-MM-dd-HH"/>
 
     <!--optional the default is gzip-->
-    <property name="compression-format" value="gzip"/> 
+    <property name="compression-format" value="gzip"/>
 
     <!--optional the default is .zip for zip, .gz for gzip-->
     <!--

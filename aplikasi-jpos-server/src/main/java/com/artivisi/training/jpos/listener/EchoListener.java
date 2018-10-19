@@ -1,5 +1,6 @@
 package com.artivisi.training.jpos.listener;
 
+import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISORequestListener;
 import org.jpos.iso.ISOSource;
@@ -19,17 +20,33 @@ public class EchoListener implements ISORequestListener {
             log.info("Menerima message");
             String mti = request.getMTI();
             log.info("MTI : "+mti);
-
             ISOMsg response = (ISOMsg) request.clone();
-            response.setMTI("0810");
-            response.set(39, "00");
-            sender.send(response);
 
+            if("0800".equals(mti)){
+                String bit70 = request.getString(70);
+                
+                if("301".equals(bit70)) {
+                    response = handleEcho(request); 
+                } else if("000".equals(bit70)) {
+                    log.info("Handle sign on");
+                }
+            }
+                   
+            // tambahkan if untuk jenis mti lain
+
+            sender.send(response);
             return true;
         } catch (Exception err) {
             err.printStackTrace();
         } 
         return false;
+    }
+
+    private ISOMsg handleEcho(ISOMsg request) throws ISOException {
+        ISOMsg response = (ISOMsg) request.clone();
+        response.setMTI("0810");
+        response.set(39, "00");
+        return response;
     }
 }
 

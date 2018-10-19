@@ -24,6 +24,12 @@
             <artifactId>jpos</artifactId>
             <version>2.1.2</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.sleepycat</groupId>
+            <artifactId>je</artifactId>
+            <version>18.3.1</version>
+        </dependency>
     </dependencies>
 
 </project>

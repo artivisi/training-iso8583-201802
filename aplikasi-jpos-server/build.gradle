@@ -1,11 +1,27 @@
+buildscript {
+	ext {
+            springBootVersion = '2.0.6.RELEASE'
+	}
+	repositories {
+            mavenCentral()
+            maven { url 'http://jpos.org/maven' }
+            maven { url 'http://download.oracle.com/maven' }
+	}
+	dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.14'
+    id 'java'
+}
+
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'idea'
 apply plugin: 'eclipse'
-
-buildscript {
-    repositories { jcenter() }
-}
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 group = 'org.jpos.template'
 version = '2.1.2'
@@ -13,10 +29,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenCentral()
-    maven { url 'http://jpos.org/maven' }
-    maven { url 'http://download.oracle.com/maven' }
-    mavenLocal()
+	mavenCentral()
 }
 
 dependencies {
@@ -24,8 +37,10 @@ dependencies {
         exclude(module: 'junit')
         exclude(module: 'hamcrest-core')
     }
-    testCompile 'junit:junit:4.8.2'
+    compile('com.sleepycat:je:18.3.1')
+    compile('org.springframework:spring-webflux:5.0.10.RELEASE')
+    compile('io.projectreactor.ipc:reactor-netty:0.7.10.RELEASE')
+    implementation('org.springframework.boot:spring-boot-starter-webflux')
 }
 
 apply from: 'jpos-app.gradle'
-

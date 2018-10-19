@@ -6,5 +6,5 @@ import lombok.Data;
 public class ResponseData {
     private String code;
     private String description;
-    private Object data;
+    private InquiryResponseData data;
 }
